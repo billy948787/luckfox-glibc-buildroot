@@ -1,26 +1,15 @@
-Buildroot is a simple, efficient and easy-to-use tool to generate embedded
-Linux systems through cross-compilation.
+This project is based on Buildroot and luckfox-SDK
+https://github.com/LuckfoxTECH/luckfox-pico
+https://github.com/buildroot/buildroot
 
-The documentation can be found in docs/manual. You can generate a text
-document with 'make manual-text' and read output/docs/manual/manual.text.
-Online documentation can be found at http://buildroot.org/docs.html
+The project has tested on Luckfox-pico-zero.
 
-To build and use the buildroot stuff, do the following:
+The project fix the "bluez" problem on uClibc buildroot system, which is used by luckfox-SDK. But also keep the npu available.
 
-1) run 'make menuconfig'
-2) select the target architecture and the packages you wish to compile
-3) run 'make'
-4) wait while it compiles
-5) find the kernel, bootloader, root filesystem, etc. in output/images
-
-You do not need to be root to build or run buildroot.  Have fun!
-
-Buildroot comes with a basic configuration for a number of boards. Run
-'make list-defconfigs' to view the list of provided configurations.
-
-Please feed suggestions, bug reports, insults, and bribes back to the
-buildroot mailing list: buildroot@buildroot.org
-You can also find us on #buildroot on OFTC IRC.
-
-If you would like to contribute patches, please read
-https://buildroot.org/manual.html#submitting-patches
+### How to use the project
+1) Download the Luckfox-SDK from https://github.com/LuckfoxTECH/luckfox-pico.
+2) Build the whole SDK and flash it to the board.
+3) Then find the mmc part on board. You can use an USB to TTL cable connect to the board's UART. Then use the u-boot (mmc part) command to get the partition info.
+4) Then build this project.
+5) Use the ./update.sh shell script to upload the rootfs.ext4 to the board. You will need to set the board into maskrom mode by holding the boot button and the reset button on Luckfox-pico-zero.
+6) done
