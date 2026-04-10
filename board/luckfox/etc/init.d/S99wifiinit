@@ -1,0 +1,35 @@
+#!/bin/sh
+
+ GPIO_NUM=123
+ WPA_CONF="/etc/wpa_supplicant.conf"
+
+ echo_log() {
+     echo "[wifi-autostart] $1"
+ }
+
+ case "$1" in
+     start)
+         echo_log "Exporting and setting GPIO${GPIO_NUM} high..."
+         [ ! -d "/sys/class/gpio/gpio${GPIO_NUM}" ] && echo "${GPIO_NUM}" > /sys/class/gpio/export
+         echo out > "/sys/class/gpio/gpio${GPIO_NUM}/direction"
+         echo 1 > "/sys/class/gpio/gpio${GPIO_NUM}/value"
+
+         echo_log "Starting wpa_supplicant..."
+         killall -q wpa_supplicant
+         wpa_supplicant -B -i wlan0 -c "${WPA_CONF}"
+
+         echo_log "Requesting IP address via udhcpc..."
+         udhcpc -i wlan0
+
+         echo_log "WiFi setup complete."
+         ;;
+     stop)
+         echo_log "Stop command received. Stopping wpa_supplicant..."
+         killall -q wpa_supplicant
+         ;;
+     *)
+         echo "Usage: $0 {start|stop}"
+         exit 1
+         ;;
+ esac
+
