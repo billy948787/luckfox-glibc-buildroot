@@ -13,5 +13,6 @@
 保留Linux kernel的優勢如下：
 1. 編譯出來的驅動可以直接load進Kernel。
 2. 因為Luckfox官方的SDK還有包含切割分區、設備樹等等，就理論上如果只是想要讓藍芽可以使用只需要更改rootfs即可，不需要大費周章改這些。
-接著要搞定的問題是npu的驅動（.ko）可以被load進kernel以後，如果要在userspace對其進行呼叫的話，還需要連結一個runtime的so，並且要是基於Glibc編譯的，但是最後成功在Luckfox官方SDK裡面找到基於Glibc的so。
+  
+接著要搞定的問題是npu的驅動（.ko）可以被load進kernel以後，如果要在userspace對其進行呼叫的話，還需要連結一個runtime的so，並且要是基於Glibc編譯的，最後成功在Luckfox官方SDK裡面找到基於Glibc的so。
 
